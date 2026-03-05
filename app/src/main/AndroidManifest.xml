@@ -13,6 +13,8 @@
         android:theme="@style/Theme.GastoIQ">
         <activity android:name=".ui.ExpenseFormActivity" />
         <activity android:name=".ui.ExpensesListActivity" />
+        <activity android:name=".ui.HistoryActivity" />
+        <activity android:name=".ui.AnalyticsActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
