@@ -1,4 +1,4 @@
-package com.example.appexamenfinal.ui.model
+package com.example.gastoiq.ui.model
 
 data class ExpenseUiModel(
     val id: Long,

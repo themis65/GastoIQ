@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GastoIQ">
+        <activity android:name=".ui.ExpenseFormActivity" />
+        <activity android:name=".ui.ExpensesListActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

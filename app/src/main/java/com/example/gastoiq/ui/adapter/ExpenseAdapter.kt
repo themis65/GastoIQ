@@ -1,12 +1,12 @@
-package com.example.appexamenfinal.ui.adapter
+package com.example.gastoiq.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appexamenfinal.databinding.ItemExpenseBinding
-import com.example.appexamenfinal.ui.model.ExpenseUiModel
+import com.example.gastoiq.ui.model.ExpenseUiModel
+import com.example.gastoiq.databinding.ItemExpenseBinding
 
 class ExpenseAdapter(
     private val onEdit: (ExpenseUiModel) -> Unit,
@@ -23,10 +23,12 @@ class ExpenseAdapter(
     }
 
     inner class VH(private val binding: ItemExpenseBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: ExpenseUiModel) {
             binding.tvAmount.text = item.amount
             binding.tvCategoryDate.text = "${item.category} • ${item.date}"
             binding.tvDescription.text = item.description
+
 
             binding.btnEdit.setOnClickListener { onEdit(item) }
             binding.btnDelete.setOnClickListener { onDelete(item) }
@@ -42,4 +44,5 @@ class ExpenseAdapter(
                 oldItem == newItem
         }
     }
+
 }

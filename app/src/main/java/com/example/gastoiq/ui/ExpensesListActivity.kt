@@ -1,11 +1,13 @@
-package com.example.appexamenfinal.ui
+package com.example.gastoiq.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.appexamenfinal.databinding.ActivityExpensesListBinding
-import com.example.appexamenfinal.ui.adapter.ExpenseAdapter
-import com.example.appexamenfinal.ui.model.ExpenseUiModel
+import com.example.gastoiq.ui.adapter.ExpenseAdapter
+import com.example.gastoiq.ui.model.ExpenseUiModel
+import com.example.gastoiq.databinding.ActivityExpensesListBinding
+import com.example.gastoiq.ui.ExpenseFormActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ExpensesListActivity : AppCompatActivity() {
@@ -21,7 +23,16 @@ class ExpensesListActivity : AppCompatActivity() {
         binding.toolbar.title = "Gastos"
 
         adapter = ExpenseAdapter(
-            onEdit = { Toast.makeText(this, "Editar: ${it.description}", Toast.LENGTH_SHORT).show() },
+            onEdit = { item ->
+                val i = Intent(this, ExpenseFormActivity::class.java).apply {
+                    putExtra("id", item.id)
+                    putExtra("amount", item.amount)        // por ahora manda el string tal cual
+                    putExtra("description", item.description)
+                    putExtra("category", item.category)
+                    putExtra("date", item.date)
+                }
+                startActivity(i)
+            },
             onDelete = { item ->
                 MaterialAlertDialogBuilder(this)
                     .setTitle("Eliminar gasto")
@@ -47,5 +58,8 @@ class ExpensesListActivity : AppCompatActivity() {
                 ExpenseUiModel(3, "$ 20.00", "Hogar", "2026-03-03", "Limpieza")
             )
         )
+        binding.fabAdd.setOnClickListener {
+            startActivity(Intent(this, ExpenseFormActivity::class.java))
+        }
     }
 }
