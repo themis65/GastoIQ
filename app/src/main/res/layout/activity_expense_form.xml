@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="Nuevo gasto"
+            android:titleTextColor="@color/text_primary"
+            app:navigationIcon="@android:drawable/ic_media_previous"
+            app:navigationIconTint="@color/text_primary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="MONTO"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:letterSpacing="0.2"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAmount"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundColor="@color/card"
+            app:boxStrokeColor="@color/card_stroke"
+            app:hintTextColor="@color/text_secondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="$ 0.00"
+                android:textColor="@color/text_primary"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="DESCRIPCIÓN"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:letterSpacing="0.2"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDescription"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundColor="@color/card"
+            app:boxStrokeColor="@color/card_stroke"
+            app:hintTextColor="@color/text_secondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Opcional"
+                android:textColor="@color/text_primary"
+                android:inputType="textCapSentences"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="CATEGORÍA"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:letterSpacing="0.2"/>
+
+        <!-- Grid 2 columnas -->
+        <GridLayout
+            android:id="@+id/gridCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:columnCount="2"
+            android:rowCount="4"
+            android:useDefaultMargins="true">
+
+            <!-- Card template -->
+            <LinearLayout
+                android:id="@+id/catFood"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card_selected"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🍔"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:id="@+id/tvFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comida"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catTransport"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚌"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transporte"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catLeisure"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎮"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ocio"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catEducation"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📚"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Educación"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catHealth"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💊"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salud"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catShopping"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🛒"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Compras"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catServices"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📱"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Servicios"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/catOther"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_category_card"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📦"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Otros"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:text="Registrar gasto"
+            android:textColor="@color/text_primary"
+            app:backgroundTint="@color/card_stroke"
+            app:cornerRadius="18dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="18dp"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
