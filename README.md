@@ -155,7 +155,6 @@ com.example.gastoiq/
 | Requisito | Estado | Implementación |
 |-----------|--------|----------------|
 | Room Database | ✅ | `AppDatabase.kt` — Singleton con 7 entidades |
-| Mínimo 5 entidades relacionadas | ✅ | 7 entidades: Usuario, Categoria, Gasto, Presupuesto, MetaAhorro, Etiqueta, GastoEtiqueta |
 | Relaciones 1:N | ✅ | ForeignKeys con CASCADE en Gasto, Presupuesto, MetaAhorro |
 | Relación N:M | ✅ | Gasto ↔ Etiqueta via tabla intermedia `gasto_etiqueta` |
 | CRUD completo | ✅ | Insert, Select, Update, Delete en todas las entidades principales |
