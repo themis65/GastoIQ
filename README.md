@@ -369,19 +369,6 @@ Los valores se obtienen en **Project Settings > API** del dashboard de Supabase.
 
 ---
 
-## 🔐 Identificación del Usuario
-
-La app genera un **ID único por dispositivo** usando `ANDROID_ID`, que es diferente en cada teléfono. No requiere pantalla de login — el usuario se crea automáticamente la primera vez que abre la app:
-
-```kotlin
-// GastoIQApp.kt
-val deviceId: String by lazy {
-    Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-}
-```
-
-En Supabase, cada registro de gasto/presupuesto/meta tiene un `usuario_id` que corresponde al `ANDROID_ID` del dispositivo que lo creó.
-
 ---
 
 ## 🚀 Generar APK
