@@ -2,31 +2,29 @@ package com.example.gastoiq.data
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.Update
-import androidx.room.Delete
-import androidx.room.Query
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.example.gastoiq.model.MetaAhorro
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MetaAhorroDao {
 
-    @Query("SELECT * FROM metas_ahorro ORDER BY fechaLimite ASC")
-    fun getAll(): Flow<List<MetaAhorro>>
-
-    @Query("SELECT * FROM metas_ahorro WHERE id = :id")
-    suspend fun getById(id: String): MetaAhorro?
+    @Query("SELECT * FROM metas_ahorro WHERE isDeleted = 0 ORDER BY localId DESC")
+    suspend fun getAll(): List<MetaAhorro>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(meta: MetaAhorro)
+    suspend fun insert(meta: MetaAhorro): Long
 
     @Update
     suspend fun update(meta: MetaAhorro)
 
-    @Delete
-    suspend fun delete(meta: MetaAhorro): Int
+    @Query("SELECT * FROM metas_ahorro WHERE isSynced = 0")
+    suspend fun getPendingSync(): List<MetaAhorro>
 
-    @Query("SELECT * FROM metas_ahorro")
-    suspend fun getParaSincronizar(): List<MetaAhorro>
+    @Query("SELECT * FROM metas_ahorro WHERE remoteId = :remoteId LIMIT 1")
+    suspend fun getByRemoteId(remoteId: String): MetaAhorro?
+
+    @Query("UPDATE metas_ahorro SET isDeleted = 1, isSynced = 0, updatedAt = :updatedAt WHERE localId = :localId")
+    suspend fun softDelete(localId: Int, updatedAt: Long)
 }

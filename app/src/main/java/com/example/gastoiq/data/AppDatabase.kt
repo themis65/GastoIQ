@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.gastoiq.model.Usuario
 import com.example.gastoiq.model.Categoria
 import com.example.gastoiq.model.Gasto
-import com.example.gastoiq.model.Presupuesto
 import com.example.gastoiq.model.MetaAhorro
+import com.example.gastoiq.model.Presupuesto
+import com.example.gastoiq.model.Usuario
 
 @Database(
     entities = [
@@ -18,7 +18,7 @@ import com.example.gastoiq.model.MetaAhorro
         Presupuesto::class,
         MetaAhorro::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -39,7 +39,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "gastoiq_db"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
+
                 INSTANCE = instance
                 instance
             }

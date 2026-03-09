@@ -4,27 +4,27 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.gastoiq.model.Categoria
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoriaDao {
 
-    @Query("SELECT * FROM categorias ORDER BY nombre ASC")
-    fun getAll(): Flow<List<Categoria>>
-
-    @Query("SELECT * FROM categorias ORDER BY nombre ASC")
-    suspend fun getAllList(): List<Categoria>
-
-    @Query("SELECT * FROM categorias WHERE id = :id")
-    suspend fun getById(id: String): Categoria?
+    @Query("SELECT * FROM categorias WHERE isDeleted = 0 ORDER BY nombre ASC")
+    suspend fun getAll(): List<Categoria>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(categoria: Categoria)
+    suspend fun insert(categoria: Categoria): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(categorias: List<Categoria>)
+    @Update
+    suspend fun update(categoria: Categoria)
 
-    @Query("SELECT COUNT(*) FROM categorias")
-    suspend fun count(): Int
+    @Query("SELECT * FROM categorias WHERE isSynced = 0")
+    suspend fun getPendingSync(): List<Categoria>
+
+    @Query("SELECT * FROM categorias WHERE remoteId = :remoteId LIMIT 1")
+    suspend fun getByRemoteId(remoteId: String): Categoria?
+
+    @Query("UPDATE categorias SET isDeleted = 1, isSynced = 0, updatedAt = :updatedAt WHERE localId = :localId")
+    suspend fun softDelete(localId: Int, updatedAt: Long)
 }
