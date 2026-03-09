@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gastoiq.adapter.PresupuestoAdapter
 import com.example.gastoiq.databinding.ActivityPresupuestosBinding
 import com.example.gastoiq.model.Categoria
@@ -25,6 +27,7 @@ import java.util.UUID
 class PresupuestosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPresupuestosBinding
+    private lateinit var adapter: PresupuestoAdapter
     private var categorias: List<Categoria> = emptyList()
 
     private val db by lazy(LazyThreadSafetyMode.NONE) {
@@ -42,6 +45,7 @@ class PresupuestosActivity : AppCompatActivity() {
         configurarHeader()
         cargarDatos()
         configurarBotonAgregar()
+        setupSwipeToDelete()
     }
 
     private fun aplicarInsets() {
@@ -98,7 +102,7 @@ class PresupuestosActivity : AppCompatActivity() {
         val nombresMap = categorias.associate { it.id to it.nombre }
         val coloresMap = categorias.associate { it.id to it.color }
 
-        val adapter = PresupuestoAdapter(
+        adapter = PresupuestoAdapter(
             mutableListOf(),
             nombresMap,
             coloresMap
@@ -166,5 +170,47 @@ class PresupuestosActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun setupSwipeToDelete() {
+        val swipe = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (!::adapter.isInitialized) return
+
+                val presupuesto = adapter.lista[viewHolder.adapterPosition]
+
+                lifecycleScope.launch {
+                    try {
+                        withContext(Dispatchers.IO) {
+                            db.presupuestoDao().delete(presupuesto)
+                        }
+
+                        Toast.makeText(
+                            this@PresupuestosActivity,
+                            "Presupuesto eliminado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@PresupuestosActivity,
+                            "No se pudo eliminar el presupuesto",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+        ItemTouchHelper(swipe).attachToRecyclerView(binding.rvPresupuestos)
     }
 }
