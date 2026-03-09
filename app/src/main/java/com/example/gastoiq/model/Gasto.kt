@@ -1,36 +1,19 @@
 package com.example.gastoiq.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ForeignKey
 
-@Entity(
-    tableName = "gastos",
-    foreignKeys = [
-        ForeignKey(
-            entity = Usuario::class,
-            parentColumns = ["id"],
-            childColumns = ["usuarioId"],
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = Categoria::class,
-            parentColumns = ["id"],
-            childColumns = ["categoriaId"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
-)
-@Parcelize
+@Entity(tableName = "gastos")
 data class Gasto(
-    @PrimaryKey
-    val id: String,
-    val monto: Double,
+    @PrimaryKey(autoGenerate = true)
+    val localId: Int = 0,
+    val remoteId: String? = null,
+    val usuarioRemoteId: String,
+    val categoriaRemoteId: String? = null,
     val descripcion: String,
+    val monto: Double,
     val fecha: String,
-    val notas: String = "",
-    val usuarioId: String,
-    val categoriaId: String
-) : Parcelable
+    val updatedAt: Long = System.currentTimeMillis(),
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false
+)

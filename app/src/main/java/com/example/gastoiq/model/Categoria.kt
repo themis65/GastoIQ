@@ -1,16 +1,17 @@
 package com.example.gastoiq.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "categorias")
-@Parcelize
 data class Categoria(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val localId: Int = 0,
+    val remoteId: String? = null,
+    val usuarioRemoteId: String,
     val nombre: String,
-    val color: String,
-    val icono: String
-) : Parcelable
+    val tipo: String? = null,
+    val updatedAt: Long = System.currentTimeMillis(),
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false
+)
